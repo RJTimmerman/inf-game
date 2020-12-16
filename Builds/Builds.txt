@@ -1,0 +1,2 @@
+Dit mapje is voor zogeheten "builds" van het Unity project.
+Hier kunnen we later versies van het spel als speelbare .exe bestanden krijgen ipv met Unity het Unity project te moeten openen om te kunnen spelen.
