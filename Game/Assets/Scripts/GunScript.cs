@@ -23,10 +23,12 @@ public class GunScript : MonoBehaviour
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
             // Iets geraakt
-            Debug.Log(hit.transform.name);
+            if (!hit.transform.CompareTag("Unshootable")) {
+                Debug.Log(hit.transform.name);
+
+                GameObject hEGO = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));  // (Hit Effect GameObject) activeer een particle effect als je iets raakt
+                Destroy(hEGO, 0.5f);
+            }
         }
-        
-        GameObject hEGO = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));  // (Hit Effect GameObject) activeer een particle effect als je iets raakt
-        Destroy(hEGO, 0.5f);
     }
 }

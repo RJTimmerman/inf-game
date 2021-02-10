@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttachObject : MonoBehaviour  // Dit kan worden aangepast om alleen bepaalde opjecten vast te kunnen maken
 {
-    Dictionary<Collider, Transform> oldParents = new Dictionary<Collider, Transform>();
+    private Dictionary<Collider, Transform> oldParents = new Dictionary<Collider, Transform>();
 
     void OnTriggerEnter(Collider other)
     {
