@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,14 +9,15 @@ public class PlayerMovementCC : MonoBehaviour  // CC staat voor Character Contro
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     public bool canMove = true;
+    public bool doGravity = true;
 
     public float speed = 12;
     public float boostFactor = 1.5f;
     public float jumpHight = 3;
     public float gravity = Physics.gravity.y;
 
-    [SerializeField] private Vector3 velocity;
-    [SerializeField] private bool isGrounded;
+    public Vector3 velocity;
+    public bool isGrounded;
 
     // Update is called once per frame
     void Update()
@@ -37,7 +38,7 @@ public class PlayerMovementCC : MonoBehaviour  // CC staat voor Character Contro
             if (Input.GetButtonDown("Jump") && isGrounded) { velocity.y = Mathf.Sqrt(jumpHight * -2 * gravity); }
         }
 
-        velocity.y += gravity * Time.deltaTime;
+        if (doGravity) { velocity.y += gravity * Time.deltaTime; }
         controller.Move(velocity * Time.deltaTime);
         
         if (isGrounded && velocity.y < 0) { velocity.y = 0; }  // Verlaag deze waarde als de speler iets meer de grond in moet worden gedrukt
