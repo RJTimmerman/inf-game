@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Ladder : MonoBehaviour
 {
-    public PlayerMovementCC playerController;
+    public GameObject playerObject;
+    private PlayerMovementCC playerController;
+    private AttachObject attachScript;
     public float speed = 6;
 
     private bool onLadder = false;
@@ -12,7 +14,8 @@ public class Ladder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerController = playerObject.GetComponent<PlayerMovementCC>();
+        attachScript = GetComponent<AttachObject>();
     }
 
     // Update is called once per frame
@@ -22,18 +25,30 @@ public class Ladder : MonoBehaviour
         {
             playerController.velocity.y = 0;
             Vector3 move = transform.parent.up;
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.W))
             {
-                //playerController.velocity.y += speed * Time.deltaTime;
                 move = move * speed * Time.deltaTime;
                 
             }
-            else //if (!playerController.isGrounded)
+            else
             {
-                //playerController.velocity.y -= speed * Time.deltaTime;
                 move = move * -speed * Time.deltaTime;
             }
             playerController.controller.Move(move);
+
+            if (playerController.isGrounded)
+            {
+                playerController.canMove = true;
+            }
+            else
+            {
+                playerController.canMove = false;
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                Exit();
+            }
         }
     }
 
@@ -43,6 +58,7 @@ public class Ladder : MonoBehaviour
         {
             onLadder = true;
             playerController.doGravity = false;
+            playerController.canMove = false;
         }
     }
 
@@ -50,8 +66,13 @@ public class Ladder : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            onLadder = false;
-            playerController.doGravity = true;
+            Exit();
         }
+    }
+    void Exit()
+    {
+        onLadder = false;
+        playerController.doGravity = true;
+        playerController.canMove = true;
     }
 }

@@ -417,6 +417,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176322313}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &202269065 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8202418620051539085, guid: 656f8c0feb75aa14588211c187ad3074,
+    type: 3}
+  m_PrefabInstance: {fileID: 1678530061770352899}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14273c2b48293cf4ead2572b39bc99a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &212142968
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 863105020}
   player: {fileID: 1939082582}
+  cameraScript: {fileID: 202269065}
   range: 2
   exitOnEsc: 1
   lockPlayer: 1
@@ -1183,7 +1196,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907879899}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.021, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1417790720}
@@ -1483,6 +1496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c34cf531ddf9244b62a209d5289438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOnly: 1
 --- !u!114 &1193379946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1495,7 +1509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de8cba279e02214ea9a6e64e183fd94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 1939082583}
+  playerObject: {fileID: 1939082582}
   speed: 2
 --- !u!65 &1193379947
 BoxCollider:
@@ -1508,8 +1522,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.56364864}
+  m_Center: {x: 0, y: 0, z: 0.2181757}
 --- !u!1 &1292747733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,6 +2035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c34cf531ddf9244b62a209d5289438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOnly: 0
 --- !u!65 &1695118690
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2076,18 +2091,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1678530061770352899}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1939082583 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1678530061781213875, guid: 656f8c0feb75aa14588211c187ad3074,
-    type: 3}
-  m_PrefabInstance: {fileID: 1678530061770352899}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939082582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1776ef3e4f1c24c44865afb5cb532e40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1960058404
 GameObject:
   m_ObjectHideFlags: 0

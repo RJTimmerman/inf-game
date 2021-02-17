@@ -6,6 +6,7 @@ public class MouseRotate : MonoBehaviour
 {
     public float sensitivity = 100;
     float xRotation = 0;
+    public bool locked = false;
 
     public GameObject player;
     private PlayerMovementCC playerController;
@@ -20,7 +21,7 @@ public class MouseRotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerController.canMove)
+        if (!locked)
         {
             float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;

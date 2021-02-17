@@ -7,6 +7,7 @@ public class UIOnClick : MonoBehaviour
     public GameObject canvas;
     public GameObject player;
     private PlayerMovementCC playerController;
+    public MouseRotate cameraScript;
 
     public float range = 2;
     public bool exitOnEsc = true;
@@ -33,13 +34,13 @@ public class UIOnClick : MonoBehaviour
         if (Vector3.Distance(player.transform.position, transform.position) <= range)
         {
             canvas.SetActive(true);
-            if (lockPlayer) { playerController.canMove = false; Cursor.lockState = CursorLockMode.Confined; }
+            if (lockPlayer) { playerController.canMove = false; cameraScript.locked = true; Cursor.lockState = CursorLockMode.Confined; }
         }
     }
 
     public void CloseUI()
     {
         canvas.SetActive(false);
-        if (lockPlayer) { playerController.canMove = true; Cursor.lockState = CursorLockMode.Locked; }
+        if (lockPlayer) { playerController.canMove = true; cameraScript.locked = false; Cursor.lockState = CursorLockMode.Locked; }
     }
 }
