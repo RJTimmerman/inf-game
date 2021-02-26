@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1750929252123258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1555171762540628685}
+  - component: {fileID: 943923347782369825}
+  m_Layer: 0
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1555171762540628685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750929252123258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3283730222947555122}
+  - {fileID: 5439870775741781234}
+  m_Father: {fileID: 1678530061625123694}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &943923347782369825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750929252123258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7fd5ed8da47d2f449c1e69e554a6359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  range: 100
+  automatic: 0
+  cooldown: 0.5
+  useMagazine: 1
+  magazineSize: 10
+  bulletsInMag: 10
+  infiniteBullets: 0
+  bulletPile: 100
+  reloadTime: 3
+  active: 1
+  autoReload: 1
+  hitEffect: {fileID: 3813671437926137757, guid: 13d00a4d0381fdd4da28eb114f9ca1d3,
+    type: 3}
+  shootSound: {fileID: 0}
+  emptySound: {fileID: 0}
+  reloadSound: {fileID: 0}
 --- !u!1 &1534842746623620421
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,7 +93,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2887423165653468527}
-  m_Father: {fileID: 3283730222947555122}
+  m_Father: {fileID: 1555171762540628685}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -129,7 +191,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3283730222947555122}
+  - {fileID: 1555171762540628685}
   m_Father: {fileID: 1678530061781213873}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -210,9 +272,9 @@ GameObject:
   - component: {fileID: 1678530061781213873}
   - component: {fileID: 1678530061781213874}
   - component: {fileID: 1678530061781213875}
-  m_Layer: 0
-  m_Name: Player (CC)
-  m_TagString: Player
+  m_Layer: 9
+  m_Name: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -399,9 +461,8 @@ GameObject:
   - component: {fileID: 4459703509729518216}
   - component: {fileID: 1182990836727562141}
   - component: {fileID: 7974780793648323166}
-  - component: {fileID: 7581547879195056076}
   m_Layer: 0
-  m_Name: Gun
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,13 +477,12 @@ Transform:
   m_GameObject: {fileID: 5522138610784086323}
   m_LocalRotation: {x: 0.7136232, y: -0, z: -0, w: 0.70052975}
   m_LocalPosition: {x: 0.405, y: -0.22999996, z: 0.449}
-  m_LocalScale: {x: 0.19999999, y: 0.28682, z: 0.20000002}
+  m_LocalScale: {x: 0.19999999, y: 0.28682, z: 0.20000003}
   m_Children:
   - {fileID: 7945653400057005746}
-  - {fileID: 5439870775741781234}
-  m_Father: {fileID: 1678530061625123694}
+  m_Father: {fileID: 1555171762540628685}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 91.061005, y: -0.000015258789, z: -0.000015258789}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4459703509729518216
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -484,35 +544,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &7581547879195056076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5522138610784086323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7fd5ed8da47d2f449c1e69e554a6359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  range: 100
-  automatic: 0
-  cooldown: 0.5
-  useMagazine: 1
-  magazineSize: 10
-  bulletsInMag: 10
-  infiniteBullets: 0
-  bulletPile: 100
-  reloadTime: 3
-  active: 1
-  autoReload: 1
-  hitEffect: {fileID: 3813671437926137757, guid: 13d00a4d0381fdd4da28eb114f9ca1d3,
-    type: 3}
-  shootSound: {fileID: 0}
-  emptySound: {fileID: 0}
-  reloadSound: {fileID: 0}
 --- !u!1 &6231787252692095526
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +648,7 @@ PrefabInstance:
     - target: {fileID: 5216850228255511435, guid: 62c1e9a2bae6ff24a8cab139be95cca6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: -0.7071069
       objectReference: {fileID: 0}
     - target: {fileID: 5216850228255511435, guid: 62c1e9a2bae6ff24a8cab139be95cca6,
         type: 3}

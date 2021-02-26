@@ -14,12 +14,13 @@ public class AttachObject : MonoBehaviour  // Dit kan worden aangepast om alleen
     {
         attachHere = new GameObject("Attached");
         attachHere.transform.parent = transform.parent;
+        attachHere.transform.localPosition = Vector3.zero; attachHere.transform.localRotation = Quaternion.Euler(Vector3.zero);
         attachHere.transform.localScale = new Vector3(1 / transform.parent.localScale.x, 1 / transform.parent.localScale.y, 1 / transform.parent.localScale.z);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (!playerOnly || other.CompareTag("Player"))
+        if (!playerOnly || other.name == "Player")
         {
             oldParents.Add(other, other.transform.parent);
             other.gameObject.transform.parent = attachHere.transform;
@@ -28,7 +29,7 @@ public class AttachObject : MonoBehaviour  // Dit kan worden aangepast om alleen
 
     void OnTriggerExit(Collider other)
     {
-        if (!playerOnly || other.CompareTag("Player"))
+        if (!playerOnly || other.name == "Player")
         {
             other.gameObject.transform.parent = oldParents[other];
             oldParents.Remove(other);

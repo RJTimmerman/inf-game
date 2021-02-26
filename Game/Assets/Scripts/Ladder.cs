@@ -14,6 +14,7 @@ public class Ladder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerObject = GameObject.Find("Player");
         playerController = playerObject.GetComponent<PlayerMovementCC>();
         attachScript = GetComponent<AttachObject>();
     }
@@ -54,7 +55,7 @@ public class Ladder : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.name == "Player")
         {
             onLadder = true;
             playerController.doGravity = false;
@@ -64,7 +65,7 @@ public class Ladder : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.name == "Player")
         {
             Exit();
         }
