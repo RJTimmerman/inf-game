@@ -6,21 +6,19 @@ public class UIOnClick : MonoBehaviour
 {
     public GameObject canvas;
     public GameObject player;
-    private PlayerMovementCC playerController;
+    private PlayerControllerCC playerController;
     public MouseRotate cameraScript;
 
     public float range = 2;
     public bool exitOnEsc = true;
     public bool lockPlayer = true;
 
-
-    // Start is called before the first frame update
-    void Start()
+    
+    void Awake()
     {
-        playerController = player.GetComponent<PlayerMovementCC>();
+        playerController = player.GetComponent<PlayerControllerCC>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (exitOnEsc && Input.GetKeyDown(KeyCode.Escape))

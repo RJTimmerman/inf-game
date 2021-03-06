@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunScript : MonoBehaviour
+public class GunScript : MonoBehaviour  // De inspector voor dit script wordt geregeld in het GunScriptEditor script
 {
     public float damage = 10;
     public float range = 100;
@@ -30,8 +30,7 @@ public class GunScript : MonoBehaviour
     public AudioClip reloadSound;  // Het geluid bij het herladen
 
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         fpsCam = GetComponentInParent<Camera>();
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
@@ -39,7 +38,6 @@ public class GunScript : MonoBehaviour
         audioPlayer = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R) && useMagazine) StartCoroutine(Reload());

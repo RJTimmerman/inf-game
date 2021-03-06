@@ -9,17 +9,18 @@ public class MouseRotate : MonoBehaviour
     public bool locked = false;
 
     public GameObject player;
-    private PlayerMovementCC playerController;
+    private PlayerControllerCC playerController;
 
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        playerController = player.GetComponent<PlayerMovementCC>();
+        playerController = player.GetComponent<PlayerControllerCC>();
+    }
+    private void Start()
+    {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!locked)

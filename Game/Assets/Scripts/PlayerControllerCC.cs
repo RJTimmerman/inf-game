@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovementCC : MonoBehaviour  // CC staat voor Character Controller, omdat dit bewegingssysteem gebruik maakt van het Character Controller component, in tegenstelling tot het Rigidbody component
+public class PlayerControllerCC : MonoBehaviour  // CC staat voor Character Controller, omdat dit bewegingssysteem gebruik maakt van het Character Controller component, in tegenstelling tot het Rigidbody component
 {
     public CharacterController controller;
-    public Transform groundCheck;
+    private Transform groundCheck;
     public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    private LayerMask groundMask;
     public bool canMove = true;
     public bool doGravity = true;
 
@@ -18,8 +18,17 @@ public class PlayerMovementCC : MonoBehaviour  // CC staat voor Character Contro
 
     public Vector3 velocity;
     public bool isGrounded;
+    public Transform lastCheckpoint;
 
-    // Update is called once per frame
+
+    private void Awake()
+    {
+        controller = GetComponent<CharacterController>();
+        groundCheck = transform.Find("GroundCheck");
+        groundMask = LayerMask.GetMask("Ground");
+        lastCheckpoint = GameObject.Find("Starting Point").transform;
+    }
+
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -42,5 +51,10 @@ public class PlayerMovementCC : MonoBehaviour  // CC staat voor Character Contro
         controller.Move(velocity * Time.deltaTime);
         
         if (isGrounded && velocity.y < 0) { velocity.y = 0; }  // Verlaag deze waarde als de speler iets meer de grond in moet worden gedrukt
+    }
+
+    public void ReturnToCheckpoint()
+    {
+        transform.position = lastCheckpoint.position;
     }
 }

@@ -5,21 +5,20 @@ using UnityEngine;
 public class Ladder : MonoBehaviour
 {
     public GameObject playerObject;
-    private PlayerMovementCC playerController;
+    private PlayerControllerCC playerController;
     private AttachObject attachScript;
     public float speed = 6;
 
     private bool onLadder = false;
 
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         playerObject = GameObject.Find("Player");
-        playerController = playerObject.GetComponent<PlayerMovementCC>();
+        playerController = playerObject.GetComponent<PlayerControllerCC>();
         attachScript = GetComponent<AttachObject>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (onLadder)

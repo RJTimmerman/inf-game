@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyGun : MonoBehaviour
 {
     private Enemy enemy;
+    private Transform playerTargetSpot;
     public GameObject projectile;
     private ParticleSystem muzzleFlash;
 
@@ -13,27 +14,26 @@ public class EnemyGun : MonoBehaviour
     private float lastShotMoment;
 
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         enemy = GetComponentInParent<Enemy>();
+        playerTargetSpot = enemy.player.Find("Shoot Here");
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (enemy.playerInAttackRange && Time.time - lastShotMoment >= cooldown)
+        if (enemy.playerInAttackRange)
         {
-            //transform.LookAt(enemy.player);
-            Shoot();
+            transform.LookAt(playerTargetSpot);
+            if (Time.time - lastShotMoment >= cooldown) Shoot();
         }
     }
 
     void Shoot()
     {
         GameObject bullet = Instantiate(projectile, transform.position, transform.rotation);
-        bullet.GetComponent<Projectile>().direction = (enemy.player.position - transform.position).normalized;
+        //bullet.GetComponent<Projectile>().direction = (enemy.player.position - transform.position).normalized;
 
         lastShotMoment = Time.time;
     }

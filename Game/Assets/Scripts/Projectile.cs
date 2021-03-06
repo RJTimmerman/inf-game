@@ -5,18 +5,17 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed;
-    public Vector3 direction;
+    //public Vector3 direction;
+    public float maxDistance;  // Changing this value while the game is running will have no effect
 
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        Destroy(gameObject, maxDistance / speed);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime, Space.World);
+        transform.Translate(transform.forward * speed * Time.deltaTime, Space.World);
     }
 }

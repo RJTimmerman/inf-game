@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     public Vector3 destination;
     private bool destinationSet;
     [Min(0)] public float destinationRange;
+    [Min(0)] public float keepPositionTime;
+    public float lastDestinationReach;
 
     [Min(0)] public float attackCooldown;
     private bool alreadyAttacked;
@@ -21,8 +23,7 @@ public class Enemy : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
 
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
@@ -31,7 +32,6 @@ public class Enemy : MonoBehaviour
         gun = GetComponentInChildren<EnemyGun>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
         if (destinationSet) agent.SetDestination(destination);
 
         float distanceTodestination = (destination - transform.position).magnitude;
-        if (distanceTodestination < 1) destinationSet = false;
+        if (distanceTodestination < 1 && Time.time - lastDestinationReach >= keepPositionTime) { destinationSet = false;  lastDestinationReach = Time.time; }
     }
     void FindDestination()
     {
@@ -58,7 +58,6 @@ public class Enemy : MonoBehaviour
         destination = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
 
         if (Physics.Raycast(destination, -transform.up, 3, groundLayer)) destinationSet = true;
-        //else FindDestination();
     }
 
     void ChasePlayer()
