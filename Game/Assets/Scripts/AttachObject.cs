@@ -7,9 +7,10 @@ public class AttachObject : MonoBehaviour  // Dit kan worden aangepast om alleen
     private GameObject attachHere;
     private Dictionary<Collider, Transform> oldParents = new Dictionary<Collider, Transform>();
 
-    public bool playerOnly = false;
+    //public bool playerOnly = false;
+    public LayerMask canAttach;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         attachHere = new GameObject("Attached");
@@ -20,7 +21,8 @@ public class AttachObject : MonoBehaviour  // Dit kan worden aangepast om alleen
 
     void OnTriggerEnter(Collider other)
     {
-        if (!playerOnly || other.name == "Player")
+        //if (!playerOnly || other.name == "Player")
+        if ((canAttach.value & (1 << other.gameObject.layer)) > 0)
         {
             oldParents.Add(other, other.transform.parent);
             other.gameObject.transform.parent = attachHere.transform;
@@ -29,7 +31,8 @@ public class AttachObject : MonoBehaviour  // Dit kan worden aangepast om alleen
 
     void OnTriggerExit(Collider other)
     {
-        if (!playerOnly || other.name == "Player")
+        //if (!playerOnly || other.name == "Player")
+        if ((canAttach.value & (1 << other.gameObject.layer)) > 0)
         {
             other.gameObject.transform.parent = oldParents[other];
             oldParents.Remove(other);

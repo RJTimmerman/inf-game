@@ -1,42 +1,87 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(GunScript))]
+[CanEditMultipleObjects()]
 public class GunScriptEditor : Editor
 {
+    SerializedObject obj;
+    SerializedProperty damage;
+    SerializedProperty range;
+    SerializedProperty automatic;
+    SerializedProperty cooldown;
+    SerializedProperty useMagazine;
+    SerializedProperty magazineSize;
+    SerializedProperty bulletsInMag;
+    SerializedProperty infiniteBullets;
+    SerializedProperty bulletPile;
+    SerializedProperty reloadTime;
+    SerializedProperty active;
+    SerializedProperty autoReload;
+    SerializedProperty hitEffect;
+    SerializedProperty shootSound;
+    SerializedProperty emptySound;
+    SerializedProperty reloadSound;
+
+    public void OnEnable()
+    {
+        obj = new SerializedObject(target);
+        damage = obj.FindProperty("damage");
+        range = obj.FindProperty("range");
+        automatic = obj.FindProperty("automatic");
+        cooldown = obj.FindProperty("cooldown");
+        useMagazine = obj.FindProperty("useMagazine");
+        magazineSize = obj.FindProperty("magazineSize");
+        bulletsInMag = obj.FindProperty("bulletsInMag");
+        infiniteBullets = obj.FindProperty("infiniteBullets");
+        bulletPile = obj.FindProperty("bulletPile");
+        reloadTime = obj.FindProperty("reloadTime");
+        active = obj.FindProperty("active");
+        autoReload = obj.FindProperty("autoReload");
+        hitEffect = obj.FindProperty("hitEffect");
+        shootSound = obj.FindProperty("shootSound");
+        emptySound = obj.FindProperty("emptySound");
+        reloadSound = obj.FindProperty("reloadSound");
+    }
+
     public override void OnInspectorGUI()
     {
-        GunScript gunScript = (GunScript)target;
+        obj.Update();
 
-        gunScript.active = EditorGUILayout.Toggle("Enabled", gunScript.active);
-        gunScript.hitEffect = (GameObject)EditorGUILayout.ObjectField("Hit Particle Effect", gunScript.hitEffect, typeof(GameObject), false);
-        gunScript.shootSound = (AudioClip)EditorGUILayout.ObjectField("Sound of Shot", gunScript.shootSound, typeof(AudioClip), false);
-        gunScript.emptySound = (AudioClip)EditorGUILayout.ObjectField("Sound of Empty Shot", gunScript.emptySound, typeof(AudioClip), false);
-        gunScript.reloadSound = (AudioClip)EditorGUILayout.ObjectField("Sound of Reload", gunScript.reloadSound, typeof(AudioClip), false);
+        EditorGUILayout.PropertyField(hitEffect);
+        EditorGUILayout.PropertyField(shootSound);
 
         EditorGUILayout.Space();
-        gunScript.damage = EditorGUILayout.FloatField("Damage", gunScript.damage);
-        gunScript.range = Mathf.Max(EditorGUILayout.FloatField("Bullet Range", gunScript.range), 0);
-        gunScript.automatic = EditorGUILayout.Toggle("Automatic Firing", gunScript.automatic);
-        gunScript.cooldown = Mathf.Max(EditorGUILayout.FloatField("Shot Cooldown (s)", gunScript.cooldown), 0);
-        gunScript.useMagazine = EditorGUILayout.Toggle("Use Magazines", gunScript.useMagazine);
-        if (gunScript.useMagazine)
+        EditorGUILayout.PropertyField(damage);
+        EditorGUILayout.PropertyField(range);
+        EditorGUILayout.PropertyField(automatic);
+        EditorGUILayout.PropertyField(cooldown);
+        EditorGUILayout.PropertyField(useMagazine);
+        if (useMagazine.boolValue)
         {
             EditorGUI.indentLevel++;
-            gunScript.magazineSize = Mathf.Max(EditorGUILayout.IntField("Magazine Size", gunScript.magazineSize), 1);
-            gunScript.bulletsInMag = Mathf.Max(EditorGUILayout.IntField("Bullets in Magazine", gunScript.bulletsInMag), 0);
-            gunScript.reloadTime = Mathf.Max(EditorGUILayout.FloatField("Reload Time (s)", gunScript.reloadTime), 0);
-            gunScript.autoReload = EditorGUILayout.Toggle("Automatic Reloading", gunScript.autoReload);
+            EditorGUILayout.PropertyField(magazineSize);
+            EditorGUILayout.PropertyField(bulletsInMag);
+            EditorGUILayout.PropertyField(reloadTime);
+            EditorGUILayout.PropertyField(autoReload);
+            EditorGUILayout.PropertyField(reloadSound);
             EditorGUI.indentLevel--;
         }
-        GUILayout.BeginHorizontal();
-        if (!gunScript.infiniteBullets)
+        if (!infiniteBullets.boolValue)
         {
-            gunScript.bulletPile = Mathf.Max(EditorGUILayout.IntField("Other Bullets", gunScript.bulletPile), 0);
+            GUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(bulletPile);
+            EditorGUILayout.PropertyField(infiniteBullets);
+            GUILayout.EndHorizontal();
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(emptySound);
+            EditorGUI.indentLevel--;
         }
-        gunScript.infiniteBullets = EditorGUILayout.Toggle("Infinite Bullets", gunScript.infiniteBullets);
-        GUILayout.EndHorizontal();
+        else
+        {
+            EditorGUILayout.PropertyField(infiniteBullets);
+        }
+
+        obj.ApplyModifiedProperties();
     }
 }

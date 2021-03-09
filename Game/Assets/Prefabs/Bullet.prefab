@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8467818894507022754}
   - component: {fileID: 848478498774535363}
   - component: {fileID: 1696686822376210294}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,8 +103,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6685680288295325513}
+  - component: {fileID: -8367511585114260237}
   - component: {fileID: 6276640595473110127}
-  m_Layer: 0
+  - component: {fileID: 190942649791366228}
+  m_Layer: 11
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +128,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &-8367511585114260237
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8236393797323749939}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6276640595473110127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +156,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   maxDistance: 50
+  damage: 5
+--- !u!54 &190942649791366228
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8236393797323749939}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

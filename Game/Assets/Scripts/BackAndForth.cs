@@ -12,7 +12,7 @@ public class BackAndForth : MonoBehaviour
     public float speed;
     public bool activated = true;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         switch (direction)
@@ -37,15 +37,15 @@ public class BackAndForth : MonoBehaviour
             {
                 case Axis.x:
                     transform.Translate(transform.right * speed * Time.deltaTime);
-                    if (transform.position.x > startPos + distance && speed > 0 || transform.position.x < startPos && speed < 0) { speed = -speed; }
+                    if (transform.position.x > startPos + distance && speed > 0 || transform.position.x < startPos && speed < 0) speed = -speed;
                     break;
                 case Axis.y:
                     transform.Translate(transform.up * speed * Time.deltaTime);
-                    if (transform.position.y > startPos + distance && speed > 0 || transform.position.y < startPos && speed < 0) { speed = -speed; }
+                    if (transform.position.y > startPos + distance && speed > 0 || transform.position.y < startPos && speed < 0) speed = -speed;
                     break;
                 case Axis.z:
                     transform.Translate(transform.forward * speed * Time.deltaTime);
-                    if (transform.position.z > startPos + distance && speed > 0 || transform.position.z < startPos && speed < 0) { speed = -speed; }
+                    if (transform.position.z > startPos + distance && speed > 0 || transform.position.z < startPos && speed < 0) speed = -speed;
                     break;
             }
         }

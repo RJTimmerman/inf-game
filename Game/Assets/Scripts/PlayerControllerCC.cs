@@ -8,6 +8,7 @@ public class PlayerControllerCC : MonoBehaviour  // CC staat voor Character Cont
     private Transform groundCheck;
     public float groundDistance = 0.4f;
     private LayerMask groundMask;
+    public LayerMask canStandOn;  // Zwaartekracht wordt tegengehouden door deze layers, maar je kan alleen springen en rennen op Ground
     public bool canMove = true;
     public bool doGravity = true;
 
@@ -18,6 +19,7 @@ public class PlayerControllerCC : MonoBehaviour  // CC staat voor Character Cont
 
     public Vector3 velocity;
     public bool isGrounded;
+    public bool standing;
     public Transform lastCheckpoint;
 
 
@@ -32,6 +34,7 @@ public class PlayerControllerCC : MonoBehaviour  // CC staat voor Character Cont
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        standing = Physics.CheckSphere(groundCheck.position, groundDistance, canStandOn);
 
         if (canMove)
         {
@@ -50,7 +53,7 @@ public class PlayerControllerCC : MonoBehaviour  // CC staat voor Character Cont
         if (doGravity) { velocity.y += gravity * Time.deltaTime; }
         controller.Move(velocity * Time.deltaTime);
         
-        if (isGrounded && velocity.y < 0) { velocity.y = 0; }  // Verlaag deze waarde als de speler iets meer de grond in moet worden gedrukt
+        if (standing && velocity.y < 0) { velocity.y = 0; }  // Verlaag deze waarde als de speler iets meer de grond in moet worden gedrukt
     }
 
     public void ReturnToCheckpoint()

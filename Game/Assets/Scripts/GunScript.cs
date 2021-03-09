@@ -5,15 +5,15 @@ using UnityEngine;
 public class GunScript : MonoBehaviour  // De inspector voor dit script wordt geregeld in het GunScriptEditor script
 {
     public float damage = 10;
-    public float range = 100;
+    [Min(0)] public float range = 100;
     public bool automatic = false;
-    public float cooldown = 0.5f;
+    [Min(0)] public float cooldown = 0.5f;
     public bool useMagazine = true;
-    public int magazineSize = 10;
-    public int bulletsInMag = 10;  // Deze waarde wordt alleen geruikt als er een magazijn wordt gebruikt
+    [Min(1)] public int magazineSize = 10;
+    [Min(0)] public int bulletsInMag = 10;  // Deze waarde wordt alleen geruikt als er een magazijn wordt gebruikt
+    [Min(0)] public float reloadTime = 3;  // Deze waarde wordt alleen geruikt als er een magazijn wordt gebruikt
     public bool infiniteBullets = false;
-    public int bulletPile = 100;  // De hoveelheid kogels die niet in het magazijn zitten
-    public float reloadTime = 3;  // Deze waarde wordt alleen geruikt als er een magazijn wordt gebruikt
+    [Min(0)] public int bulletPile = 100;  // De hoveelheid kogels die niet in het magazijn zitten
 
     public bool active = true;
     private bool reloading = false;

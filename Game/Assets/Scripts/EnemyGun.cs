@@ -33,7 +33,6 @@ public class EnemyGun : MonoBehaviour
     void Shoot()
     {
         GameObject bullet = Instantiate(projectile, transform.position, transform.rotation);
-        //bullet.GetComponent<Projectile>().direction = (enemy.player.position - transform.position).normalized;
 
         lastShotMoment = Time.time;
     }

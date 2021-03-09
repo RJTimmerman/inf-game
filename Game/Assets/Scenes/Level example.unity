@@ -4048,6 +4048,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -8010,6 +8012,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 30
   attackRange: 20
@@ -8504,6 +8508,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -17222,6 +17228,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -18835,6 +18843,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -19217,6 +19227,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -19656,6 +19668,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -21985,6 +21999,36 @@ Transform:
   m_Father: {fileID: 867011177}
   m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1171258562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1171258563}
+  m_Layer: 9
+  m_Name: Starting Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1171258563
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171258562}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -23.5, y: 1.2, z: -93}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1184185339
 GameObject:
   m_ObjectHideFlags: 0
@@ -23161,6 +23205,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -24212,6 +24258,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -28306,6 +28354,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
@@ -37953,6 +38003,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 731635682, guid: 656f8c0feb75aa14588211c187ad3074, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1555171762540628685, guid: 656f8c0feb75aa14588211c187ad3074,
         type: 3}
       propertyPath: m_RootOrder
@@ -40712,6 +40766,8 @@ MonoBehaviour:
   player: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   destinationRange: 3
+  keepPositionTime: 0
+  lastDestinationReach: 0
   attackCooldown: 2
   sightRange: 40
   attackRange: 25
