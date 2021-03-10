@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
+using TMPro;
 
 [CustomEditor(typeof(GunScript))]
 [CanEditMultipleObjects()]
@@ -50,6 +52,7 @@ public class GunScriptEditor : Editor
 
         EditorGUILayout.PropertyField(hitEffect);
         EditorGUILayout.PropertyField(shootSound);
+        EditorGUILayout.PropertyField(active);
 
         EditorGUILayout.Space();
         EditorGUILayout.PropertyField(damage);
@@ -83,5 +86,54 @@ public class GunScriptEditor : Editor
         }
 
         obj.ApplyModifiedProperties();
+
+        if (GUILayout.Button("Update HUD")) UpdateHUD();
+    }
+
+
+    private Transform gunHUD;
+    private Transform ammoInfo;
+    private TextMeshProUGUI magazineNumber;
+    private Slider magazineBar;
+    private TextMeshProUGUI totalAmmoCount;
+    private GameObject crosshair;
+
+
+    void Awake()
+    {
+        gunHUD = GameObject.Find("Gun HUD").transform;
+        ammoInfo = gunHUD.Find("Ammo Info").transform;
+        magazineNumber = ammoInfo.Find("Magazine Number").GetComponent<TextMeshProUGUI>();
+        magazineBar = ammoInfo.GetComponent<Slider>();
+        totalAmmoCount = ammoInfo.Find("Total Ammo Count").GetComponent<TextMeshProUGUI>();
+        crosshair = gunHUD.Find("Crosshair Dot").gameObject;
+    }
+
+    private void UpdateHUD()
+    {
+        if (useMagazine.boolValue)
+        {
+            magazineNumber.text = bulletsInMag.intValue.ToString();
+            magazineBar.maxValue = magazineSize.intValue;
+            magazineBar.value = bulletsInMag.intValue;
+        }
+        else
+        {
+            magazineNumber.text = "-";
+            magazineBar.value = magazineBar.maxValue;
+        }
+        if (!infiniteBullets.boolValue)
+        {
+            totalAmmoCount.text = bulletPile.intValue.ToString();
+        }
+        else
+        {
+            totalAmmoCount.text = "∞";
+        }
+
+        if (active.boolValue) crosshair.SetActive(true);
+        else crosshair.SetActive(false);
+
+        EditorApplication.QueuePlayerLoopUpdate();
     }
 }

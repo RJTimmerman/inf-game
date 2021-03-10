@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GunScript : MonoBehaviour  // De inspector voor dit script wordt geregeld in het GunScriptEditor script
 {
@@ -29,6 +31,13 @@ public class GunScript : MonoBehaviour  // De inspector voor dit script wordt ge
     public AudioClip emptySound;  // Het geluid als je schiet terwijl je geweer leeg is
     public AudioClip reloadSound;  // Het geluid bij het herladen
 
+    private Transform gunHUD;
+    private Transform ammoInfo;
+    private TextMeshProUGUI magazineNumber;
+    private Slider magazineBar;
+    private TextMeshProUGUI totalAmmoCount;
+    private GameObject crosshair;
+
 
     void Awake()
     {
@@ -36,11 +45,48 @@ public class GunScript : MonoBehaviour  // De inspector voor dit script wordt ge
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
         reloadAnimation = GetComponent<Animator>();
         audioPlayer = GetComponent<AudioSource>();
+
+        gunHUD = GameObject.Find("Gun HUD").transform;
+        ammoInfo = gunHUD.Find("Ammo Info").transform;
+        magazineNumber = ammoInfo.Find("Magazine Number").GetComponent<TextMeshProUGUI>();
+        magazineBar = ammoInfo.GetComponent<Slider>();
+        totalAmmoCount = ammoInfo.Find("Total Ammo Count").GetComponent<TextMeshProUGUI>();
+        crosshair = gunHUD.Find("Crosshair Dot").gameObject;
+    }
+
+    void Start()
+    {
+        InitializeHUD();
+    }
+    public void InitializeHUD()
+    {
+        if (useMagazine)
+        {
+            magazineNumber.text = bulletsInMag.ToString();
+            magazineBar.maxValue = magazineSize;
+            magazineBar.value = bulletsInMag;
+        }
+        else
+        {
+            magazineNumber.text = "-";
+            magazineBar.value = magazineBar.maxValue;
+        }
+        if (!infiniteBullets)
+        {
+            totalAmmoCount.text = bulletPile.ToString();
+        }
+        else
+        {
+            totalAmmoCount.text = "∞";
+        }
+
+        if (active) crosshair.SetActive(true);
+        else crosshair.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && useMagazine) StartCoroutine(Reload());
+        if (Input.GetKeyDown(KeyCode.R) && useMagazine && !reloading) StartCoroutine(Reload());
 
         if (active)
         {
@@ -52,6 +98,11 @@ public class GunScript : MonoBehaviour  // De inspector voor dit script wordt ge
                 {
                     Fire();
             }   }
+        }
+
+        if (reloading)
+        {
+            magazineBar.value += magazineSize / reloadTime * Time.deltaTime;
         }
     }
 
@@ -88,12 +139,12 @@ public class GunScript : MonoBehaviour  // De inspector voor dit script wordt ge
         lastShotMoment = Time.time;
         if (useMagazine)
         {
-            bulletsInMag--;
+            bulletsInMag--; HUDUpdateMag();
             if (bulletsInMag == 0 && autoReload) StartCoroutine(Reload());
         }
         else if (!infiniteBullets)
         {
-            bulletPile--;
+            bulletPile--; HUDUpdatePile();
         }
     }
 
@@ -103,24 +154,30 @@ public class GunScript : MonoBehaviour  // De inspector voor dit script wordt ge
         {
             Debug.Log("Reloading...");
             reloading = true;
+            magazineNumber.text = "x";
+            magazineBar.wholeNumbers = false; magazineBar.value = 0;
             // audioPlayer.PlayOneShot(reloadSound);  // TODO herlaad animatie
 
             yield return new WaitForSeconds(reloadTime);
             if (!infiniteBullets)
             {
                 int bulletsBefore = bulletsInMag;
-                bulletsInMag = Mathf.Min(magazineSize, bulletsBefore + bulletPile);
-                bulletPile = Mathf.Max(bulletPile - (bulletsInMag - bulletsBefore), 0);
+                bulletsInMag = Mathf.Min(magazineSize, bulletsBefore + bulletPile); HUDUpdateMag();
+                bulletPile = Mathf.Max(bulletPile - (bulletsInMag - bulletsBefore), 0); HUDUpdatePile();
             }
             else
             {
-                bulletsInMag = magazineSize;
+                bulletsInMag = magazineSize; HUDUpdateMag();
             }
             reloading = false;
+            magazineBar.wholeNumbers = true; //magazineBar.value = bulletsInMag;
         }
         else
         {
             Debug.Log("There are no more bullets!");
         }
     }
+
+    private void HUDUpdateMag() { magazineNumber.text = bulletsInMag.ToString(); magazineBar.value = bulletsInMag; }
+    private void HUDUpdatePile() { totalAmmoCount.text = bulletPile.ToString(); }
 }
