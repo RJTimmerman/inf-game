@@ -6,7 +6,7 @@ public class PlayerControllerCC : MonoBehaviour  // CC staat voor Character Cont
 {
     public CharacterController controller;
     private Transform groundCheck;
-    public float groundDistance = 0.4f;
+    [Min(0)] public float groundDistance = 0.4f;
     private LayerMask groundMask;
     public LayerMask canStandOn;  // Zwaartekracht wordt tegengehouden door deze layers, maar je kan alleen springen en rennen op Ground
     public bool canMove = true;
@@ -14,7 +14,7 @@ public class PlayerControllerCC : MonoBehaviour  // CC staat voor Character Cont
 
     public float speed = 12;
     public float boostFactor = 1.5f;
-    public float jumpHight = 3;
+    [Min(0)] public float jumpHight = 3;
     public float gravity = Physics.gravity.y;
 
     public Vector3 velocity;
