@@ -11,10 +11,7 @@ using System.Reflection; // System en System.Reflection zijn voor SafeGradientVa
 public class PlayerHealthEditor : Editor
 {
     SerializedObject obj;
-    SerializedProperty invincible;
-    SerializedProperty maxHealth;
-    SerializedProperty health;
-    SerializedProperty colourOfHealthbar;
+    SerializedProperty invincible, maxHealth, health, colourOfHealthbar;
 
 
     public void OnEnable()
@@ -29,6 +26,7 @@ public class PlayerHealthEditor : Editor
     public override void OnInspectorGUI()
     {
         obj.Update();
+        PlayerHealth healthScript = (PlayerHealth)target;
 
         EditorGUILayout.PropertyField(invincible);
         if (!invincible.boolValue)
@@ -40,12 +38,11 @@ public class PlayerHealthEditor : Editor
 
         obj.ApplyModifiedProperties();
 
-        if (GUILayout.Button("Update HUD")) UpdateHUD();
+        if (GUILayout.Button("Update HUD")) { healthScript.InitializeHUD(); EditorApplication.QueuePlayerLoopUpdate(); }//UpdateHUD();
     }
 
 
-    private Transform playerHUD;
-    private Transform healthHUD;
+    /* Transform playerHUD, healthHUD;
     private TextMeshProUGUI healthNumber;
     private Slider healthBar;
     private Image barFiller;
@@ -97,5 +94,5 @@ public class PlayerHealthEditor : Editor
 
         Gradient gradientValue = propertyInfo.GetValue(sp, null) as Gradient;
         return gradientValue;
-    }
+    }*/
 }

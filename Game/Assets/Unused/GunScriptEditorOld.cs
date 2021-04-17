@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#if false  // Dit is omdat Unity anders errors geeft, doordat veel variabelen niet meer public zijn
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -41,3 +43,5 @@ public class GunScriptEditor : Editor
         GUILayout.EndHorizontal();
     }
 }
+
+#endif

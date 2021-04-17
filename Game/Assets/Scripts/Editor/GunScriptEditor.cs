@@ -8,26 +8,12 @@ using TMPro;
 public class GunScriptEditor : Editor
 {
     SerializedObject obj;
-    SerializedProperty damage;
-    SerializedProperty range;
-    SerializedProperty automatic;
-    SerializedProperty cooldown;
-    SerializedProperty useMagazine;
-    SerializedProperty magazineSize;
-    SerializedProperty bulletsInMag;
-    SerializedProperty infiniteBullets;
-    SerializedProperty bulletPile;
-    SerializedProperty reloadTime;
-    SerializedProperty active;
-    SerializedProperty autoReload;
-    SerializedProperty hitEffect;
-    SerializedProperty shootSound;
-    SerializedProperty emptySound;
-    SerializedProperty reloadSound;
+    SerializedProperty type, damage, range, automatic, cooldown, useMagazine, magazineSize, bulletsInMag, infiniteBullets, bulletPile, reloadTime, active, autoReload, hitEffect, shootSound, emptySound, reloadSound, relativePosition;
 
     public void OnEnable()
     {
         obj = new SerializedObject(target);
+        type = obj.FindProperty("type");
         damage = obj.FindProperty("damage");
         range = obj.FindProperty("range");
         automatic = obj.FindProperty("automatic");
@@ -44,17 +30,16 @@ public class GunScriptEditor : Editor
         shootSound = obj.FindProperty("shootSound");
         emptySound = obj.FindProperty("emptySound");
         reloadSound = obj.FindProperty("reloadSound");
+        relativePosition = obj.FindProperty("relativePosition");
     }
 
     public override void OnInspectorGUI()
     {
         obj.Update();
+        GunScript gunScript = (GunScript)target;
 
-        EditorGUILayout.PropertyField(hitEffect);
-        EditorGUILayout.PropertyField(shootSound);
-        EditorGUILayout.PropertyField(active);
-
-        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(relativePosition);
+        EditorGUILayout.PropertyField(type);
         EditorGUILayout.PropertyField(damage);
         EditorGUILayout.PropertyField(range);
         EditorGUILayout.PropertyField(automatic);
@@ -85,17 +70,20 @@ public class GunScriptEditor : Editor
             EditorGUILayout.PropertyField(infiniteBullets);
         }
 
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(hitEffect);
+        EditorGUILayout.PropertyField(shootSound);
+        EditorGUILayout.PropertyField(active);
+
         obj.ApplyModifiedProperties();
 
-        if (GUILayout.Button("Update HUD")) UpdateHUD();
+        if (GUILayout.Button("Update HUD")) { gunScript.InitializeHUD();EditorApplication.QueuePlayerLoopUpdate(); } //UpdateHUD();
     }
 
 
-    private Transform gunHUD;
-    private Transform ammoInfo;
-    private TextMeshProUGUI magazineNumber;
+    /*private Transform gunHUD, ammoInfo;
+    private TextMeshProUGUI magazineNumber, totalAmmoCount;
     private Slider magazineBar;
-    private TextMeshProUGUI totalAmmoCount;
     private GameObject crosshair;
 
 
@@ -135,5 +123,5 @@ public class GunScriptEditor : Editor
         else crosshair.SetActive(false);
 
         EditorApplication.QueuePlayerLoopUpdate();
-    }
+    }*/
 }
