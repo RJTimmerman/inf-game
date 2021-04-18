@@ -14,6 +14,7 @@ public class LevelData0 : LevelData
     public int maxHealth;
     public string[] guns;
     public int[] ammo;
+    public bool[] gunsActive;
     public int[] takenHealthPacks;
     public int[] takenAmmoPacks;
     
@@ -35,10 +36,12 @@ public class LevelData0 : LevelData
         int gunCount = gunScripts.Count;
         guns = new string[gunCount];
         ammo = new int[gunCount];
+        gunsActive = new bool[gunCount];
         for (int i = 0; i < gunCount; i++)
         {
             guns[i] = gunScripts[i].type;
             ammo[i] = gunScripts[i].GetAmmo();
+            gunsActive[i] = gunScripts[i].gameObject.activeInHierarchy;
         }
         
         int takenHealthPacksCount = gameManager.takenHealthPacks.Count;

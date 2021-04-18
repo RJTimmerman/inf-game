@@ -142,9 +142,8 @@ MonoBehaviour:
   type: Normal
   damage: 10
   range: 100
-  cooldown: 0.1
+  cooldown: 0.5
   reloadTime: 3
-  active: 1
   useMagazine: 1
   automatic: 1
   autoReload: 1
@@ -152,6 +151,7 @@ MonoBehaviour:
   magazineSize: 10
   bulletsInMag: 10
   bulletPile: 100
+  active: 1
   hitEffect: {fileID: 3813671437926137757, guid: 13d00a4d0381fdd4da28eb114f9ca1d3,
     type: 3}
   shootSound: {fileID: 0}

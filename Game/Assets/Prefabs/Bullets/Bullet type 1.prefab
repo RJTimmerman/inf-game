@@ -171,6 +171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooter: {fileID: 0}
-  speed: 8
+  speed: 17
   maxDistance: 50
   damage: 15

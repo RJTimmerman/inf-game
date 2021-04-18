@@ -13,8 +13,10 @@ public class GameManager0 : GameManager
     public GameObject player;
     public PlayerControllerCC playerController;
     public PlayerHealth playerHealth;
+    public MouseRotate cameraScript;
     public List<GunScript> ownedGuns = new List<GunScript>();
     public List<GunScript> possibleGuns;
+    public GunScript currentGun;
     public string objective = "Find and kill all enemies";
     public List<GameObject> enemies;
     public List<GameObject> livingEnemies;
@@ -26,17 +28,28 @@ public class GameManager0 : GameManager
     public List<GameObject> remainingAmmoPacks;
     public List<GameObject> takenAmmoPacks;
 
+    private TextMeshProUGUI objectiveText;
     private TextMeshProUGUI savedText;
+    private GameObject deathScreen;
+    private GameObject victoryScreen;
+
 
 
     private void Awake()
     {
-        savedText = GameObject.Find("Saved Text").GetComponent<TextMeshProUGUI>();
+        objectiveText = GameObject.Find("Objective Text").GetComponent<TextMeshProUGUI>(); objectiveText.text = objective; objectiveText.CrossFadeAlpha(0, 0, true);
+        savedText = GameObject.Find("Saved Text").GetComponent<TextMeshProUGUI>(); savedText.CrossFadeAlpha(0, 0, true);
+        deathScreen = GameObject.Find("Death Screen"); deathScreen.SetActive(false);
+        victoryScreen = GameObject.Find("Victory Screen"); victoryScreen.SetActive(false);
+        
+
         player = GameObject.Find("Player");
         playerController = player.GetComponent<PlayerControllerCC>();
         playerHealth = player.GetComponent<PlayerHealth>();
-        
-        foreach (Transform child in player.transform.Find("First Person Camera")) if (child.name.StartsWith("Gun ")) ownedGuns.Add(child.GetComponent<GunScript>());
+        cameraScript = player.GetComponentInChildren<MouseRotate>();
+
+        foreach (Transform child in player.transform.Find("First Person Camera")) if (child.name.StartsWith("Gun ")) { 
+                ownedGuns.Add(child.GetComponent<GunScript>()); if (child.gameObject.activeInHierarchy) currentGun = child.GetComponent<GunScript>(); }
         enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
         livingEnemies = enemies.ToList();
     }
@@ -47,12 +60,18 @@ public class GameManager0 : GameManager
         PlayerHealth.OnPlayerDeath += PlayerDied;
         
         LoadData();
+
+        objectiveText.CrossFadeAlpha(1, 0, true);
+        objectiveText.CrossFadeAlpha(10, 4, true);
+        objectiveText.CrossFadeAlpha(0, 6, true);
+        Cursor.visible = false;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K)) SafeData();
-        else if (Input.GetKeyDown(KeyCode.L)) SceneManager.LoadScene("Level " + Level);
+        if (Input.GetKey(KeyCode.RightControl) && Input.GetKeyDown(KeyCode.K)) SafeData();
+        else if (Input.GetKey(KeyCode.RightControl) && Input.GetKeyDown(KeyCode.L)) SceneManager.LoadScene("Level " + Level);
+        else if (Input.GetKey(KeyCode.RightControl) && Input.GetKeyDown(KeyCode.Semicolon)) SaveSystem.DeleteSave();
     }
     
 
@@ -70,13 +89,16 @@ public class GameManager0 : GameManager
 
     private void PlayerDied()
     {
-        
+        playerController.canMove = false; cameraScript.locked = true; Cursor.lockState = CursorLockMode.Confined; Cursor.visible = true;
+        currentGun.active = false;
+        deathScreen.gameObject.SetActive(true);
     }
 
 
     private void ObjectiveCompleted()
     {
-        // Level completed
+        playerController.canMove = false; cameraScript.locked = true; Cursor.lockState = CursorLockMode.Confined; Cursor.visible = true;
+        victoryScreen.SetActive(true);
     }
 
 
@@ -84,6 +106,7 @@ public class GameManager0 : GameManager
     {
         return possibleGuns.Find(x => x.type == type);
     }
+
 
     private void SafeData()
     {
@@ -96,7 +119,7 @@ public class GameManager0 : GameManager
     private void LoadData()
     {
         LevelData0 data = (LevelData0)SaveSystem.LoadLevel();
-        if (data.Level != Level) { SafeData(); return; }
+        if (data == null || data.Level != Level) { SafeData(); return; }
 
         foreach (int enemyID in data.deadEnemies) Destroy(livingEnemies.Find(x => x.name == "Enemy " + enemyID));
 
@@ -108,10 +131,13 @@ public class GameManager0 : GameManager
         {
             GunScript gun = Instantiate(GetGun(data.guns[i]), player.transform.Find("First Person Camera")); gun.name = gun.name.Replace("(Clone)", ""); ownedGuns.Add(gun);
             gun.SetAmmo(data.ammo[i]);
+            if (data.gunsActive[i]) currentGun = gun; else gun.gameObject.SetActive(false);
         }
         
         playerController.lastCheckpoint = GameObject.Find("Checkpoint " + data.checkpoint).transform;
         playerController.ReturnToCheckpoint();
+
+        Debug.Log("Loaded safe file at " + SaveSystem.path);
     }
 
     

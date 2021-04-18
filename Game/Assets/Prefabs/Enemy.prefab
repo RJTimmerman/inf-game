@@ -504,7 +504,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5000001
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -530,8 +530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinationRange: 3
   keepPositionTime: 2
-  sightRange: 10
-  attackRange: 5
+  sightRange: 25
+  attackRange: 15
   health: 40
   maxHealth: 40
   invincible: 0
@@ -610,7 +610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 8236393797323749939, guid: e7c318038327fa943b9d8dfe4bb27652,
     type: 3}
-  cooldown: 0.8
+  cooldown: 0.5
 --- !u!1 &3080509112472448052
 GameObject:
   m_ObjectHideFlags: 0

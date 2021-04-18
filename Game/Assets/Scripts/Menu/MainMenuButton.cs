@@ -8,7 +8,7 @@ public class MainMenuButton : MonoBehaviour
     protected Image background;
 
 
-    private void Awake()
+    protected void Awake()
     {
         background = GetComponentInChildren<Image>();
     }

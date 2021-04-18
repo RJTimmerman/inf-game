@@ -9,9 +9,10 @@ public class GunScript : MonoBehaviour  // De inspector voor dit script wordt ge
     public string type = "Normal";
     [SerializeField] private int damage = 10;
     [SerializeField] [Min(0)] private float range = 100, cooldown = 0.5f, reloadTime = 3;
-    [SerializeField] private bool  active = true, useMagazine = true, automatic = false, autoReload = true, infiniteBullets = false;
+    [SerializeField] private bool useMagazine = true, automatic = false, autoReload = true, infiniteBullets = false;
     [SerializeField] [Min(1)] private int magazineSize = 10;
     [SerializeField] [Min(0)] private int bulletsInMag = 10, bulletPile = 100;  // ...; De hoveelheid kogels die niet in het magazijn zitten
+    public bool active = true;
 
     private bool reloading = false;
     private float lastShotMoment;
@@ -121,7 +122,7 @@ public class GunScript : MonoBehaviour  // De inspector voor dit script wordt ge
     {
         // Iets geraakt, doe damage
         //audioPlayer.PlayOneShot(shootSound);
-        Debug.Log(hit.transform.name);
+        Debug.Log("Player shot " + hit.transform.name);
         if (hit.transform.CompareTag("Enemy")) DamageEnemy(hit.transform);
 
         muzzleFlash.Play();
